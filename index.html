@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather news m-scale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, 0);
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            font-size: 36px
+        }
+
+        #box {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div id="box"><span>현재 웨더뉴스의 M-스케일은 M<span id="info"></span> 입니다.</span></div>
+    <script>
+        const infoinner = document.getElementById('info');
+        function GetMscale() {
+            return new Promise(function(resolve) {
+                fetch('https://weathernews.jp/mscale/json/scale.json')
+                    .then(res => res.json())
+                    .then(mscale => resolve(mscale.mscale));
+            }).then(function(mscaleget) {
+                infoinner.innerText = mscaleget;
+
+            });
+        }
+
+        GetMscale();
+
+        setInterval(GetMscale, 5000);
+    </script>
+</body>
+</html>
